@@ -4,5 +4,7 @@ import com.app.notifications.model.UserDetails;
 
 public interface UserService {
 
-    UserDetails registerUser (UserDetails userDetails);
+    UserDetails getUserByFirstName(String firstName);
+
+    UserDetails registerUser(UserDetails userDetails);
 }

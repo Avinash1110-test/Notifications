@@ -1,5 +1,6 @@
 package com.app.notifications.controller;
 
+import com.app.notifications.exception.ServiceException;
 import com.app.notifications.mapper.UserDetailsMapper;
 import com.app.notifications.model.UserDetails;
 import com.app.notifications.requestDTO.RegisterUserRequestDTO;
@@ -13,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping(value = "/app/userDetails/")
+@RequestMapping("/app/userDetails/")
 public class UserDetailsController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsController.class);
@@ -30,6 +33,18 @@ public class UserDetailsController {
 
         logger.info("AppController - Health check is called successfully.");
         return new ResponseEntity<>("Application is ready.", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "getUserByFirstName/{firstName}")
+    public ResponseEntity<?> getUserByFirstName(@PathVariable("firstName") String firstName) {
+
+        UserDetails userDetails = userService.getUserByFirstName(firstName);
+        if (userDetails == null) {
+            throw new ServiceException("First name doesn't exists, please enter valid first name.", HttpStatus.NOT_FOUND);
+        }
+        UserResponseDTO userResponseDTO = userDetailsMapper.entityToResponse(userDetails);
+        ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), Boolean.TRUE, userResponseDTO, null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @PostMapping(value = "registerUser")
