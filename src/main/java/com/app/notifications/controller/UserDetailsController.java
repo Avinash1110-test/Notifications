@@ -12,9 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/app/userDetails/")
@@ -33,6 +34,31 @@ public class UserDetailsController {
 
         logger.info("AppController - Health check is called successfully.");
         return new ResponseEntity<>("Application is ready.", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "sendEmail")
+    public ResponseEntity<?> sendEmail(@RequestParam String to, @RequestParam String subject, @RequestParam String text) throws MessagingException {
+
+        userService.sendSimpleMessage(to, subject, text);
+        ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), Boolean.TRUE, "Mail sent successfully.", null);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @GetMapping(value = "sendMailWithScheduler")
+    @Scheduled(fixedDelay = 10000)
+    public ResponseEntity<?> sendMailWithScheduler() {
+
+        userService.sendMailWithScheduler();
+        ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), Boolean.TRUE, "Mail sent successfully.", null);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @GetMapping(value = "sendEmailWithAttachments")
+    public ResponseEntity<?> sendEmailWithAttachments(@RequestParam String to) throws MessagingException {
+
+        userService.sendEmailWithAttachments(to);
+        ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), Boolean.TRUE, "Mail sent successfully.", null);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     @GetMapping(value = "getUserByFirstName/{firstName}")
