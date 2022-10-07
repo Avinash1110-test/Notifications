@@ -45,7 +45,7 @@ public class UserDetailsController {
     }
 
     @GetMapping(value = "sendMailWithScheduler")
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10000)
     public ResponseEntity<?> sendMailWithScheduler() {
 
         userService.sendMailWithScheduler();

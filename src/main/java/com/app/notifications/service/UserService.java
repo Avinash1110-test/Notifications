@@ -9,7 +9,7 @@ public interface UserService {
 
     void sendSimpleMessage(String to, String subject, String text);
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10000)
     void sendMailWithScheduler();
 
     void sendEmailWithAttachments(String toMail) throws MessagingException;
