@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDetails getUserByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName);
+    }
+
+    @Override
     public UserDetails registerUser(UserDetails userDetails) {
         return userRepository.save(userDetails);
     }
