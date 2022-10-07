@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     private JavaMailSender emailSender;
 
     /* send a normal mail
-    *  here we are taking To mail id from method parameter, we can take To mail id from database as well by using userId, firstName, ect,.*/
+    *  here we are taking To mail id from method parameter, we can take To mail id from database as well by using userId, firstName, etc,.*/
     @Override
     public void sendSimpleMessage(String to, String subject, String text) {
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /* send a mail with set of intervals, it'll automatically triggers mail
-       here we are hardcoding To mail id, we can take To mail id from database as well by using userId, firstName, ect,. */
+       here we are hardcoding To mail id, we can take To mail id from database as well by using userId, firstName, etc,. */
     @Override
     @Scheduled(fixedDelay = 10000) //set time, here we set it for 10 seconds
     public void sendMailWithScheduler() {
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /* send email with attachment, here we are using file from local
-    here we are taking to mail id from method parameter, we can take To mail id from database as well by using userId, firstName, ect,. */
+    here we are taking to mail id from method parameter, we can take To mail id from database as well by using userId, firstName, etc,. */
     @Override
     public void sendEmailWithAttachments(String toMail) {
 
