@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Value("${spring.mail.scheduler.to.email}")
+    private String schedulerToEmail;
+
     @Autowired
     private JavaMailSender emailSender;
 
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
             logger.info("sendSimpleMessage is called at : {}", dtf.format(now));
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
-            message.setTo("avinashakkera123@gmail.com");
+            message.setTo(schedulerToEmail);
             message.setSubject("Test scheduler");
             message.setText("Hi again..!");
             emailSender.send(message);
